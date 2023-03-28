@@ -6,6 +6,11 @@
 
 `n.find_element(By.TAG_NAME, "a").get_attribute("href")` - из новости берём ссылку.
 
+Собирается словарь:
+```
+data_news.update({n.text:n.find_element(By.TAG_NAME, "a").get_attribute("href")})
+```
+
 ---
 
 

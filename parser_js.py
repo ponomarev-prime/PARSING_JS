@@ -1,6 +1,10 @@
 #
 print('\nPARSER\n')
 
+chromedriver_win32 = "chromedriver_win32\chromedriver.exe"
+chromedriver_linux64 = "chromedriver_linux64\chromedriver"
+url = "https://mail.ru/" 
+
 import time 
  
 import pandas as pd 
@@ -27,18 +31,16 @@ chrome_service = Service(chrome_path)
 # pass the defined options and service objects to initialize the web driver 
 driver = Chrome(options=options, service=chrome_service) 
 driver.implicitly_wait(1)
-
-url = "https://mail.ru/" 
  
 driver.get(url) 
-time.sleep(5)
+time.sleep(2)
 
 content = driver.find_element(By.CSS_SELECTOR, "div[class*='grid_newscol ideback-16fnjrt'")
 
 news = content.find_elements(By.TAG_NAME, "li")
 #news = content.find_elements(By.CLASS_NAME, "news-item-container")
 
-data_news = dict()
+data_news = {}
 
 for n in news:
     print(f't = {n.text}, h = {n.find_element(By.TAG_NAME, "a").get_attribute("href")}')
@@ -46,8 +48,11 @@ for n in news:
         print("text out")
         break
     
-    #data_news.update({"text":n.text})
+    data_news.update({n.text:n.find_element(By.TAG_NAME, "a").get_attribute("href")})
     #data_news.update({"link":n.find_element(By.TAG_NAME, "a").get_attribute("href")})
+
+print(data_news)
+print(len(data_news))
 
 
 
